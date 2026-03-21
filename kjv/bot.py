@@ -15,6 +15,10 @@ from Passage import Passage
 channel=None
 COMMAND_PREFIX='.'
 
+def chunkstring(string, length):
+    """Generate fixed-length chunks from a string."""
+    return (string[0+i:length+i] for i in range(0, len(string), length))
+
 class TestBot(irc.bot.SingleServerIRCBot):
     def __init__(self, channel, nickname, server, port=6667):
         irc.bot.SingleServerIRCBot.__init__(self, [(server, port)], nickname, nickname)
@@ -56,8 +60,9 @@ class TestBot(irc.bot.SingleServerIRCBot):
                 if cite:
                     passages.extend(Passage.find(cite))
             for passage in passages[:4]:
-                c.privmsg(self.channel, f"{nick}: {passage}")
-                time.sleep(5)
+                for chunk in chunkstring(str(passage),256):
+                    c.privmsg(self.channel, f"{nick}: {chunk}")
+                    time.sleep(5)
             if len(passages)>4:
                 c.privmsg(self.channel, f"{nick}: You can only display 4 passages at a time.")
 
