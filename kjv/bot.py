@@ -48,7 +48,7 @@ class TestBot(irc.bot.SingleServerIRCBot):
         c = self.connection
         a=cmd.split(" ",1)
 
-        if len(a)==2 and a[0]=="bbe":
+        if len(a)==2 and a[0]=="kjv":
             tokens=Lexer.lex(a[1])
             cites=Parser(tokens).parse()
             passages=[]
