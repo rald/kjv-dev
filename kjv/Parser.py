@@ -59,6 +59,7 @@ class Parser:
     def p4(self):
         if self.tokens[self.i].type==TokenType.NUMBER:
             self.svnum=int(self.tokens[self.i].text)
+            self.evnum=self.svnum
             self.i+=1
             return self.p5()
         return None
@@ -108,7 +109,14 @@ class Parser:
             if cite:
                 cites.append(cite)
 
+            while self.tokens[self.i].type==TokenType.COMMA:
+                self.i+=1
+                cite=self.p4()
+                if cite:
+                    cites.append(cite)
+
             self.bname=None
+            self.bsname=None
             self.scnum=None
             self.ecnum=None
             self.svnum=None

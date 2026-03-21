@@ -7,6 +7,7 @@ class LexerState(Enum):
     NUMBER  = 3
     COLON   = 4
     DASH    = 5
+    COMMA   = 6
 
 class Lexer:
     @staticmethod
@@ -27,10 +28,12 @@ class Lexer:
                 elif c.isdecimal():
                     i-=1
                     state = LexerState.NUMBER
-                elif c == ":":
-                    tokens.append(Token(TokenType.COLON, ":"))
-                elif c == "-":
-                    tokens.append(Token(TokenType.DASH, "-"))
+                elif c == ':':
+                    tokens.append(Token(TokenType.COLON, c))
+                elif c == '-':
+                    tokens.append(Token(TokenType.DASH, c))
+                elif c == ',':
+                    tokens.append(Token(TokenType.COMMA, c))
 
             elif state == LexerState.STRING:
                 if c.isalpha() or c == " ":

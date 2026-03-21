@@ -14,6 +14,9 @@ if __name__ == "__main__":
 
 		tokens=Lexer.lex(code)
 
+		for token in tokens:
+		    print(token)
+
 		cites=Parser(tokens).parse()
 
 		passages=[]
