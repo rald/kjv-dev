@@ -12,26 +12,20 @@ def chunkstring(string, length):
 
 if __name__ == "__main__":
 
-	for i in range(1,len(sys.argv)):
+    for i in range(1,len(sys.argv)):
 
-		code=sys.argv[i]
+        code=sys.argv[i]
 
-		tokens=Lexer.lex(code)
+        tokens=Lexer.lex(code)
 
-		"""
-		for token in tokens:
-		    print(token)
-		"""
+        cites=Parser(tokens).parse()
 
-		cites=Parser(tokens).parse()
+        passages=[]
+        for cite in cites:
+            passages.extend(Passage.find(cite))
 
-		passages=[]
-		for cite in cites:
-		    if cite:
-		        passages.extend(Passage.find(cite))
-
-		print()
-		for passage in passages:
-		    for chunk in chunkstring(str(passage),256):
-		    	print(chunk)
-		    print()
+        print()
+        for passage in passages:
+            print(passage)
+            print()
+        print()
